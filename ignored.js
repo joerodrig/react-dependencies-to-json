@@ -3,6 +3,8 @@ module.exports = {
   MODULES: [
     null,
     'React, {Component, PropTypes}',
+    'React, { Component, PropTypes }',
+    'React, { PropTypes }',
     'React, {PropTypes}',
     '{PropTypes}',
     '{Component, PropTypes}',
