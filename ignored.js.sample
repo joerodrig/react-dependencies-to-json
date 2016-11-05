@@ -12,7 +12,6 @@ module.exports = {
     'sync',
     '{connect}',
     'actions',
-    '* as contacts',
     '{Provider}',
     'store',
     'moment',
