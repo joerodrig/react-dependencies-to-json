@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "commander": "^2.9.0",
-    "text-files-loader": "^1.0.5"
+    "text-files-loader": "^1.0.5",
+    "wait.for": "^0.6.6"
   }
 }
