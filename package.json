@@ -12,6 +12,7 @@
   "author": "Joseph J. Rodriguez",
   "license": "ISC",
   "dependencies": {
-    "commander": "^2.9.0"
+    "commander": "^2.9.0",
+    "text-files-loader": "^1.0.5"
   }
 }
