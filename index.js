@@ -53,8 +53,13 @@ class Parser {
         }
       }
     }
-    this.containers = data;
-    return data;
+
+    const formattedContainers = [];
+    for (let key in data) {
+      formattedContainers.push({[key]: data[key]});
+    }
+    this.containers = formattedContainers;
+    return formattedContainers;
   }
 
   _parseComponentDependencies() {
@@ -77,9 +82,19 @@ class Parser {
         }
       }
     }
-    this.components = data;
-    return data;
+
+    const formattedComponents = [];
+    for (let key in data) {
+      formattedComponents.push({[key]: data[key]});
+    }
+    this.components = formattedComponents;
+    return formattedComponents;
   }
 }
 
 const ReactParser = new Parser();
+
+fs.writeFile('./dependencies.json', JSON.stringify(ReactParser), (err) => {
+  if (err) throw err;
+  console.log('Formatted and saved the projects Component/Container dependencies to dependencies.json!');
+});
