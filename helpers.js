@@ -1,16 +1,27 @@
 var fs = require("fs");
 
-export function die(error) {
-  throw new Error(error.msg + "\n");
-}
+module.exports = {
+  die: (errorMsg) => {
+    throw new Error(errorMsg + "\n");
+  },
 
-export function checkDir(path) {
-  try {
-    let stats = fs.lstatSync(path);
-    if (!stats.isDirectory()) {
-      throw new Error(`Not a directory: ${path} \n`);
+  validateDirectory: (path) => {
+    let valid = { isValid: true, error: null };
+    try {
+      let stats = fs.lstatSync(path);
+      if (!stats.isDirectory()) {
+        valid = {
+          isValid: false,
+          error: `Not a directory: ${path} \n`
+        };
+      }
+    } catch (e) {
+      valid = {
+        isValid: false,
+        error: `Unable to read directory: ${path} \n`
+      };
     }
-  } catch (e) {
-    throw new Error(`Unable to read directory: ${path} \n`);
+
+    return valid;
   }
-}
+};
