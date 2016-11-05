@@ -2,6 +2,7 @@
 const program = require('commander');
 const fs = require('fs');
 const textFilesLoader = require('text-files-loader');
+const ignored = require('./ignored.js');
 const {validateDirectory, die} = require('./helpers.js');
 const patterns = require("./patterns.js");
 
@@ -9,7 +10,9 @@ class Parser {
   constructor() {
     this.path = this._initializePath();
     this.containers = [];
-    this._setContainerDependencies();
+    this.components = [];
+    this._parseComponentDependencies();
+    this._parseContainerDependencies();
   }
 
   // Validate and return the path passed into the script
@@ -30,49 +33,52 @@ class Parser {
     return argPath;
   }
 
-  _setContainerDependencies() {
+  _parseContainerDependencies() {
     const data = [];
-    const loadContainersPromise = new Promise((resolve, reject) => {
-      textFilesLoader.load(`${this.path}/containers`, (err, files) => {
-        if (err) { die({ msg: err }) };
-        const ignore = [
-          null,
-          "React, {Component, PropTypes}",
-          "React, {PropTypes}",
-          "{Component, PropTypes}",
-          "humps",
-          "sync",
-          "{connect}",
-          "actions",
-          "* as contacts",
-          "{Provider}",
-          "store",
-        ];
+    const files = textFilesLoader.loadSync(`${this.path}/containers`);
+    for (let fileName in files) {
+      let matches = files[fileName].match(patterns.MODULE_DEPENDENCY.detect);
+      // If lines matching the detect pattern were found
+      if (matches !== null && matches.length > 0) {
+        data[fileName] = [];
 
-        for (let fileName in files) {
-          let matches = files[fileName].match(patterns.MODULE_DEPENDENCY.detect);
-          // If lines matching the detect pattern were found
-          if (matches !== null && matches.length > 0) {
-            data[fileName] = [];
-
-            // Extract target pattern from lines
-            for (let index in matches) {
-              const result = matches[index].match(patterns.MODULE_DEPENDENCY.extract);
-              if (!ignore.includes(result[1])) {
-                // NOTE: This result thing is super brittle
-                // Should probably start writing specs for it
-                data[fileName].push(result[1].trim());
-              }
-            }
+        // Extract target pattern from lines
+        for (let index in matches) {
+          const result = matches[index].match(patterns.MODULE_DEPENDENCY.extract);
+          if (!ignored.MODULES.includes(result[1])) {
+            // NOTE: This result thing is super brittle
+            // Should probably start writing specs for it
+            data[fileName].push(result[1].trim());
           }
         }
-        setTimeout(resolve, 100, data);
-      });
-    })
+      }
+    }
+    this.containers = data;
+    return data;
+  }
 
-    Promise.all([loadContainersPromise]).then(containersWithDependencies => {
-      this.containers = containersWithDependencies;
-    });
+  _parseComponentDependencies() {
+    const data = [];
+    const files = textFilesLoader.loadSync(`${this.path}/components`);
+    for (let fileName in files) {
+      let matches = files[fileName].match(patterns.MODULE_DEPENDENCY.detect);
+      // If lines matching the detect pattern were found
+      if (matches !== null && matches.length > 0) {
+        data[fileName] = [];
+
+        // Extract target pattern from lines
+        for (let index in matches) {
+          const result = matches[index].match(patterns.MODULE_DEPENDENCY.extract);
+          if (!ignored.MODULES.includes(result[1])) {
+            // NOTE: This result thing is super brittle
+            // Should probably start writing specs for it
+            data[fileName].push(result[1].trim());
+          }
+        }
+      }
+    }
+    this.components = data;
+    return data;
   }
 }
 
