@@ -1,13 +1,13 @@
 {
-  "name": "react-depdencies-graph",
+  "name": "react-depdencies-to-json",
   "version": "0.0.0",
-  "description": "Visualize your react dependencies",
+  "description": "Map out your react dependencies in a JSON file",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "bin": {
-    "snippet": "./index.js"
+    "parse-react-dependencies": "./index.js"
   },
   "author": "Joseph J. Rodriguez",
   "license": "ISC",
