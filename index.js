@@ -2,9 +2,9 @@
 const program = require('commander');
 const fs = require('fs');
 const textFilesLoader = require('text-files-loader');
-const ignored = require('./ignored.js');
-const {validateDirectory, die} = require('./helpers.js');
-const patterns = require("./patterns.js");
+const ignored = require('./utilities/ignored.js');
+const {validateDirectory, die} = require('./utilities/helpers.js');
+const patterns = require("./utilities/patterns.js");
 
 class Parser {
   constructor() {
