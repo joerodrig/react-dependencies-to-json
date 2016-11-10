@@ -4,3 +4,5 @@ node_modules/
 dependencies.json
 
 ignored.js
+
+npm-debug.log
