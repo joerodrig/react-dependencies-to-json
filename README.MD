@@ -25,3 +25,6 @@ The script will recursively scan through each of your files in the **components*
 
 ## Ignore modules
 To ignore import statements in modules, enter the import name in `ignored.js`
+
+## Running tests
+`npm test`

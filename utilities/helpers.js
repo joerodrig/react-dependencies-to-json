@@ -2,7 +2,7 @@ var fs = require("fs");
 
 module.exports = {
   die: (errorMsg) => {
-    throw new Error(errorMsg + "\n");
+    throw new Error(`${errorMsg}\n`);
   },
 
   validateDirectory: (path) => {

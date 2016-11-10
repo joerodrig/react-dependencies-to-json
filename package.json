@@ -4,7 +4,7 @@
   "description": "Map out your react dependencies in a JSON file",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R spec"
   },
   "bin": {
     "parse-react-dependencies": "./index.js"
