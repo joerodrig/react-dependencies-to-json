@@ -12,13 +12,13 @@ module.exports = {
       if (!stats.isDirectory()) {
         valid = {
           isValid: false,
-          error: `Not a directory: ${path} \n`
+          error: `Not a directory: ${path} \n`,
         };
       }
     } catch (e) {
       valid = {
         isValid: false,
-        error: `Unable to read directory: ${path} \n`
+        error: `Unable to read directory: ${path} \n`,
       };
     }
 
