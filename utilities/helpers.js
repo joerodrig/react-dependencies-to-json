@@ -23,5 +23,12 @@ module.exports = {
     }
 
     return valid;
-  }
+  },
+
+  writeToFileAsJSON: (fileName, data, successMsg) => {
+    fs.writeFile(fileName, JSON.stringify(data), (err) => {
+      if (err) throw err;
+      console.log(successMsg);
+    });
+  },
 };
