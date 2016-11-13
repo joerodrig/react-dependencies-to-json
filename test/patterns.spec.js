@@ -27,16 +27,16 @@ describe("patterns", () => {
       });
 
       it("should be null for each variation", () => {
-        // let tests = [
-        //   "export defaul function test()",
-        //   "export cons TEST_ACTION",
-        //   "export completely wrong syntax",
-        //   "expot const TEST_ACTION",
-        // ];
-        //
-        // for (let test of tests) {
-        //   expect(test.match(MODULE_DEPENDENCY.detect)).to.be.null;
-        // }
+        let tests = [
+          "export defaul function test()",
+          "export cons TEST_ACTION",
+          "export completely wrong syntax",
+          "expot const TEST_ACTION",
+        ];
+
+        for (let test of tests) {
+          expect(test.match(MODULE_DEPENDENCY.detect)).to.be.null;
+        }
       });
     });
     describe("extract", () => {
