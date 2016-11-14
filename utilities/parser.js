@@ -34,18 +34,18 @@ module.exports = class Parser {
     return argPath;
   }
 
-  _parseContainerDependencies() {
+  _parseFiles(path, pattern) {
     const data = [];
-    const files = textFilesLoader.loadSync(`${this.path}/containers`);
+    const files = textFilesLoader.loadSync(path);
     for (let fileName in files) {
-      let matches = files[fileName].match(patterns.MODULE_DEPENDENCY.detect);
+      let matches = files[fileName].match(pattern.detect);
       // If lines matching the detect pattern were found
       if (matches !== null && matches.length > 0) {
         data[fileName] = [];
 
         // Extract target pattern from lines
         for (let index in matches) {
-          const result = matches[index].match(patterns.MODULE_DEPENDENCY.extract);
+          const result = matches[index].match(pattern.extract);
           if (!ignored.MODULES.includes(result[1])) {
             // NOTE: This result thing is super brittle
             // Should probably start writing specs for it
@@ -55,40 +55,27 @@ module.exports = class Parser {
       }
     }
 
-    const formattedContainers = [];
+    const formattedItems = [];
     for (let key in data) {
-      formattedContainers.push({[key]: data[key]});
+      formattedItems.push({[key]: data[key]});
     }
-    this.containers = formattedContainers;
-    return formattedContainers;
+
+    return formattedItems;
+  }
+
+  _parseContainerDependencies() {
+    this.containers = this._parseFiles(
+      `${this.path}/containers`,
+      patterns.MODULE_DEPENDENCY
+    )
+    return this.containers;
   }
 
   _parseComponentDependencies() {
-    const data = [];
-    const files = textFilesLoader.loadSync(`${this.path}/components`);
-    for (let fileName in files) {
-      let matches = files[fileName].match(patterns.MODULE_DEPENDENCY.detect);
-      // If lines matching the detect pattern were found
-      if (matches !== null && matches.length > 0) {
-        data[fileName] = [];
-
-        // Extract target pattern from lines
-        for (let index in matches) {
-          const result = matches[index].match(patterns.MODULE_DEPENDENCY.extract);
-          if (!ignored.MODULES.includes(result[1])) {
-            // NOTE: This result thing is super brittle
-            // Should probably start writing specs for it
-            data[fileName].push(result[1].trim());
-          }
-        }
-      }
-    }
-
-    const formattedComponents = [];
-    for (let key in data) {
-      formattedComponents.push({[key]: data[key]});
-    }
-    this.components = formattedComponents;
-    return formattedComponents;
+    this.containers = this._parseFiles(
+      `${this.path}/components`,
+      patterns.MODULE_DEPENDENCY
+    )
+    return this.components;
   }
 }
