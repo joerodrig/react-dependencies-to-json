@@ -6,3 +6,5 @@ dependencies.json
 ignored.js
 
 npm-debug.log
+
+coverage
