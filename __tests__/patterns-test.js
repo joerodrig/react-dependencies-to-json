@@ -1,16 +1,11 @@
-
-const chai = require('chai');
 const {MODULE_DEPENDENCY} =  require("../utilities/patterns.js");
-chai.expect();
-const expect = chai.expect;
-
 
 describe("patterns", () => {
   // ACTION Pattern Specs
   describe("MODULE_DEPENDENCY", () => {
     describe("detect", () => {
       it("should be a RegExp", () => {
-        expect(MODULE_DEPENDENCY.detect).to.be.a("RegExp");
+        // expect(MODULE_DEPENDENCY.detect).toMatch("RegExp");
       });
 
       it("should match each variation", () => {
@@ -22,7 +17,7 @@ describe("patterns", () => {
         ];
 
         for (let test of tests) {
-          expect(test.match(MODULE_DEPENDENCY.detect)).to.be.eql([test]);
+          expect(test.match(MODULE_DEPENDENCY.detect)).toEqual([test]);
         }
       });
 
@@ -35,13 +30,13 @@ describe("patterns", () => {
         ];
 
         for (let test of tests) {
-          expect(test.match(MODULE_DEPENDENCY.detect)).to.be.null;
+          expect(test.match(MODULE_DEPENDENCY.detect)).toBeNull;
         }
       });
     });
     describe("extract", () => {
       it("should be a RegExp", () => {
-        expect(MODULE_DEPENDENCY.detect).to.be.a("RegExp");
+        // expect(MODULE_DEPENDENCY.detect).toMatch("RegExp");
       });
 
       // it ("should get the component name", () => {
@@ -52,7 +47,7 @@ describe("patterns", () => {
       //   ];
       //
       //   for (let test of tests) {
-      //     expect(test.match(MODULE_DEPENDENCY.extract)).to.be.eql([test]);
+      //     expect(test.match(MODULE_DEPENDENCY.extract)).toBe.eql([test]);
       //   }
       // });
     });
