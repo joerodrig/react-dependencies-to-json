@@ -29,4 +29,7 @@ The script will recursively scan through each of your files in the **components*
 To ignore import statements in modules, enter the import name in `ignored.js`
 
 ## Running tests
+This project uses Jest as its test framework
+
+To run tests:  
 `npm test`
